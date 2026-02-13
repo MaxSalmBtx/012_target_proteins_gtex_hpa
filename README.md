@@ -14,7 +14,7 @@ To identify recurrent and frequent amplicons that are associated with robust inc
 
 ## Reproducibility
 
-:x: Code repository (GitHub)
+:white_check_mark: Code repository: 
 
 :x: Software Container (Docker)
 
@@ -37,12 +37,9 @@ Please note, that the datasets involved are large and you are advised to run thi
 
 ## Protocol
 
-
-TODO
-
-
-
-
+```sh
+Rscript 00_run_targets.R
+```
 
 ## Release History
 * 0.0.1
