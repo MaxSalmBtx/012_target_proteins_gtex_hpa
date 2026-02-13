@@ -1,0 +1,6 @@
+{
+	"NPERM" : 1, 
+	"references" : ["ERBB2", "MET", "EGFR",  "TACSTD2", "CD47", "CD276", "MSLN", "DLL3", "CLDN18", "TPBG", "FOLH1", "SSTR2", "FAP", "NECTIN4", "CEACAM5", "MMP14", "DDR1", "ST14", "ITGA3"],
+	"core_tissue": ["Heart", "Kidney", "Lung", "Skin"]
+}
+

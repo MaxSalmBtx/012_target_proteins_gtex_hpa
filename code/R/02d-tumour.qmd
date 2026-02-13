@@ -1,0 +1,147 @@
+
+# Tumour Biology
+
+## Data Overview
+
+
+```{r, fig.height=6, fig.width=8, eval = TRUE}
+#| label: fig-eda
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "A summary table describing the input data. N.B. only three genes are selected as examples."
+
+targets::tar_load(exp_gene_pheno_gt)
+exp_gene_pheno_gt
+
+```
+
+
+## Differential Expression: mRNA (gene level)
+
+::: {.panel-tabset}
+
+
+### Enrichment: Tumour vs all healthy tissues
+
+To compare the expression distributions in specific cancer types to the combined global expression distribution across healthy tissues (GTEx), we calculated the Earth mover’s distance, a suitable measure when samples are unpaired and exhibit both significant intra- and inter-class heterogeneity [@Nabavi2016]. 
+
+
+
+```{r, fig.height=6, fig.width=8, eval = TRUE}
+#| label: fig-emd1
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "An (interactive) volcano plot illustrates the relative expression levels of multiple targets across a wide range of cancer types. For each target, expression levels are represented as the dissimilarity between the expression distribution in a specific cancer type and the combined expression distribution in all healthy tissues. Points are coloured by the proportion of overlap between the two kernel density estimates, with zero overlap favoured. N.B. To prevent overplotting, only the top indication is plotted for each target."
+
+
+targets::tar_load(gene_emd_plt)
+gene_emd_plt$interactive_plt
+
+```
+
+
+```{r, fig.height=6, fig.width=8, eval = TRUE}
+#| label: fig-emd_heat
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "An (interactive) heatmap illustrates the relative expression levels of multiple targets across a wide range of cancer types. For each target, expression levels are represented as the dissimilarity between the expression distribution in a specific cancer type and the combined expression distribution in all healthy tissues. N.B. A static version of this heatmap is written to disk (emd_heat.svg)."
+
+targets::tar_load(gene_emd_heat_plt)
+gene_emd_heat_plt
+
+```
+
+
+
+```{r, fig.height=6, fig.width=8, eval = TRUE}
+#| label: fig-emd2
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "A (static) volcano plot illustrates the relative expression levels of multiple targets across a wide range of cancer types. For each target, expression levels are represented as the dissimilarity between the expression distribution in a specific cancer type and the combined expression distribution in all healthy tissues. Points are coloured by the proportion of overlap between the two kernel density estimates, with zero overlap favoured. N.B. To prevent overplotting, only the top indication is plotted for each target."
+
+targets::tar_load(gene_emd_plt)
+# add_btx_logo(gene_emd_plt$static_plt) # required library(stylehaven)
+gene_emd_plt$static_plt
+
+```
+
+```{r}
+targets::tar_load(gene_emd)
+
+gene_emd |>
+DT::datatable(
+  class = "cell-border stripe",
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons", 
+  options = 
+    list(
+      dom = "Bfrtip", 
+      buttons = c("copy", "csv", "excel", "pdf", "print")
+    ),
+  caption = "Earth Mover Distance Analysis",
+)
+
+```
+
+
+### Enrichment: Tumour vs healthy tissue with maximum expression
+
+
+```{r, fig.height=6, fig.width=8, eval = TRUE}
+#| label: fig-emd_max
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "An (interactive) volcano plot illustrates the relative expression levels of multiple targets across a wide range of cancer types. For each target, expression levels are represented as the dissimilarity between the expression distribution in a specific cancer type and the specific healthy distribution that has the highest median expression. Points are coloured by the proportion of overlap between the two kernel density estimates, with zero overlap favoured.  N.B. To prevent overplotting, only the top indication is plotted for each target.  N.B. A static version of a heatmap capturing this information is written to disk (emd_max_heat.svg)."
+
+
+targets::tar_load(gene_emd_max_plt)
+gene_emd_max_plt$interactive_plt
+
+```
+
+
+
+### Magnitude: Tumour expression level
+
+
+
+```{r, fig.height=6, fig.width=8, eval = TRUE}
+#| label: fig-emd3
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "A scatter plot illustrates the maximum expression levels of multiple targets across a wide range of cancer types. For each target, the maximum median expression in tumour and normal tissues is retrieved, and plotted on the x- and y-axes respectively. Points are coloured by precedence, and the lines reflects the 25th and 75th percentiles of expression level in the corresponding tumour/normal tissues."
+
+targets::tar_load(gene_iqr_plt)
+gene_iqr_plt
+
+```
+
+:::
+
+
+## Expression: mRNA (isoform level)
+
+
+::: {.panel-tabset}
+
+
+### Enrichment: Tumour-specific expression 
+
+
+```{r, fig.height=13/2, fig.width=32/2, eval = TRUE}
+#| label: fig-emd_iso
+#| fig.showtext: TRUE
+#| fig-cap-location: bottom
+#| fig-cap: "A plot illustrating tumour-specific isoform expression. Transcripts with zero median expression in healthy tissue were recovered, and isoform expression quantiles subsequently estimated for multiple cancer types. Each point represents the median expression level for an indication; associated confidence intervals represent the 25th and 75th percentiles."
+
+
+targets::tar_load(iso_iqr_plt)
+iso_iqr_plt
+
+```
+
+:::
+
+
+

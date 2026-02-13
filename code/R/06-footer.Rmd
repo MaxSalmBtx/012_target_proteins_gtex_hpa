@@ -1,0 +1,28 @@
+# R session details
+
+
+```{r Versions}
+info <- sessionInfo()
+r_ver <- paste(info$R.version$major, info$R.version$minor, sep = ".")
+```
+ 
+Analysis was performed using R (ver. `r r_ver`) and the following additional packages:
+
+```{r packages_used}
+lambda <- function(xx){c(Package = xx$Package, Version = xx$Version, Author = xx$Author)}
+
+if (!is.null(info$otherPkgs)) {
+  tmp <- lapply(X = info$otherPkgs, FUN = lambda)
+  tmp <- do.call("rbind", tmp)
+  tmp <- tmp[order(tmp[, 1]), ]
+  pander::pander(tmp, caption = ("Packages used"))
+}
+```
+
+```{r session}
+sessionInfo()
+```
+
+# References
+
+

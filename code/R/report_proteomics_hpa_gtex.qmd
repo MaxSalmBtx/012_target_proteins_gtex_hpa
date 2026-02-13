@@ -1,0 +1,176 @@
+---
+title: 'Quantitative Protein Levels: Healthy Tissue in HPA & GTEx'
+subtitle: 'Portfolio targets'
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+author: "Target Sciences <max.salm@bicycletx.com>"
+format: 
+  html:
+    theme: 
+        light: sandstone
+        dark: darkly
+    toc-title: Contents
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    code-fold: true
+    number-sections: true
+    number-depth: 2
+    highlight-style: pygments
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true    
+    citations-hover: true
+    footnotes-hover: true
+    embed-resources: true    
+bibliography: references.bib
+csl: nature.csl
+citeproc: true
+lightbox: auto
+lang: en-GB
+pagetitle: 'gtex_hpa_healthy_prot'
+description-meta: 'Exploratory Data Analysis'
+author-meta: 'm.salm'
+date-meta: '`r format(Sys.time(), "%d %B, %Y")`'
+---
+
+![Department: Therapeutics (Target Sciences)](./IMG/Bicycle_Workmark_RGB_Reg.jpg){width=50% fig-align="left"}
+
+
+
+```{r child = '01b-frontMatter.Rmd'}
+```
+
+# Aim
+
+To identify tissues at risk of on-target off-tumour toxicity.
+
+# Results
+
+::: {.panel-tabset}
+
+## Human Protein Atlas
+
+A quantitative proteome and transcriptome abundance atlas of *29 paired healthy human tissues* from the Human Protein Atlas project representing human genes by 18,072 transcripts and 13,640 proteins. N.B. No replicates per tissue.
+
+```{r}
+
+targets::tar_load(hpa_quant)
+
+hpa_quant |>
+DT::datatable(
+  class = "cell-border stripe",
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons", 
+  options = 
+    list(
+      dom = "Bfrtip", 
+      buttons = c("copy", "csv", "excel", "pdf", "print")
+    ),
+  caption = "Source: Human Protein Atlas. Expression level in ppb",
+)
+```
+
+
+## GTEx: Jiang et al
+
+The distribution of target protein expression across a comprehensive panel of healthy human tissues assayed by GTEx. Expression level reflects the protein expression level as measured by tandem mass tag (TMT) 10plex/MS3 mass spectrometry, measured in 201 GTEx samples from *32 different tissue types of 14 normal individuals*. 
+
+
+```{r, eval = TRUE}
+
+targets::tar_load(gtex_quant)
+
+gtex_quant |>
+DT::datatable(
+  class = "cell-border stripe",
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons", 
+  options = 
+    list(
+      dom = "Bfrtip", 
+      buttons = c("copy", "csv", "excel", "pdf", "print")
+    ),
+  caption = "Source: GTEx. Normalized protein abundances (transformed back to the absolute abundances)",
+)
+```
+
+## GTEx: Fang et al
+
+A systematic quantification of 10,841 unique proteins from *720 GTEx samples, representing five human tissues* (sigmoid colon, heart left ventricle, liver, lung and thyroid).
+
+```{r, eval = TRUE}
+
+targets::tar_load(gtex_quant_fang)
+
+gtex_quant_fang |>
+DT::datatable(
+  class = "cell-border stripe",
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons", 
+  options = 
+    list(
+      dom = "Bfrtip", 
+      buttons = c("copy", "csv", "excel", "pdf", "print")
+    ),
+  caption = "Source: GTEx. Protein quantification was based on the ratio of the reporter ion intensity for each sample relative to the tissue-specific reference.",
+)
+```
+
+
+:::
+
+
+
+
+# Methods
+
+## Human Protein Atlas
+
+Re-processed data [@Prakash2023] for 29 healthy tissues was downloaded from the `Expression values across all genes` tab at: 
+
+* https://www.ebi.ac.uk/gxa/experiments/E-PROT-29/Downloads
+
+The associated abstract is reproduced below:
+
+"we generated a quantitative proteome and transcriptome abundance atlas of 29 paired healthy human tissues from the Human Protein Atlas project representing human genes by 18,072 transcripts and 13,640 proteins including 37 without prior protein-level evidence. The analysis revealed that hundreds of proteins, particularly in testis, could not be detected even for highly expressed mRNAs, that few proteins show tissue-specific expression, that strong differences between mRNA and protein quantities within and across tissues exist and that protein expression is often more stable across tissues than that of transcripts. Only 238 of 9,848 amino acid variants found by exome sequencing could be confidently detected at the protein level showing that proteogenomics remains challenging, needs better computational methods and requires rigorous validation. Many uses of this resource can be envisaged including the study of gene/protein expression regulation and biomarker specificity evaluation."
+
+
+
+
+## GTEx
+
+Relative protein abundance in 900 GTEx tissues, quantified using TMT-LC-MS through two separate studies was retrieved from:
+
+* https://gtexportal.org/home/downloads/egtex/proteomics
+
+### Fang et al
+
+This normalized protein abundance data represents tandem mass tags (TMT)-based mass-spectrometry (MS3) quantification of the relative protein abundance of 720 GTEx samples from five GTEx tissues [@Fang2025].
+
+### Jiang et al
+
+For reference, this table is also deposited here:
+
+* Table S2. C. Normalized protein abundances (transformed back to the absolute abundances)
+: https://www.cell.com/cms/10.1016/j.cell.2020.08.036/attachment/0d79a576-f9b7-4342-81a8-f80c14df0372/mmc3.xlsx
+
+This dataset represents protein and RNA expression levels in 32 normal human tissues from 14 individuals [@Jiang2020]:
+
+"The Genotype-Tissue Expression (GTEx) project collected samples from 54 tissues of 948 post-mortem donors and characterized their transcriptomes (Carithers et al., 2015; GTEx Consortium, 2015; Project and eGTEx Project, 2017). For this study we quantitatively profiled the proteome of 201 GTEx samples from 32 different tissue types of 14 normal individuals (Figure 1A), covering all major organs (Table S1). The proteome data were acquired with a tandem mass tag (TMT) 10plex/MS3 mass spectrometry strategy (Figure 1B), which enables 10 isotopically labeled samples to be analyzed in a single experiment (McAlister et al., 2014). To increase the proteome coverage, each TMT 10plex sample was extensively fractionated (Figure 1B). To facilitate cross-tissue comparison and to reduce the influence of technical variation between mass spectrometry runs, we randomized the tissue samples such that each TMT 10plex consists of an assortment of tissues and a reference sample."
+
+
+Normalised abundance data was retrieved. This was generated accordingly:
+
+"Since there are two reference replicate samples in each run, batch effects were removed by using the relative abundance of each sample to the average of the reference samples. NAs in the reference channels (126, 131 channels) were imputed using a minimum value of 15. The relative abundance of each sample was logarithm transformed at base 2. Different from traditional case-control study or a study with a few conditions, our samples were from 32 different types of tissues, which are highly heterogeneous. The majority of previous normalization methods cannot guarantee a robust and tissue-sample adaptive correction. Here, we applied our data-driven robust normalization method (RobNorm) which took into account sample heterogeneities (Wang et al., 2019b). To robustly estimate the sample effects, we implemented the density-power-weight to down weigh the outliers for the structured data. Our algorithm automatically detected the sample inliers (stable abundances) which were used for the robust normalization and at the same time kept the genuine heterogeneities from outliers. To avoid the bias from missing values, the estimation for sample effects was based on the genes with less than 50% missing values, in total, 6,320 genes. We set density power parameter γ = 1, and took zero vectors as the standard sample to implement RobNorm (Wang et al., 2019b). The sample effects were then corrected for all the genes on the relative abundances in logarithm scale. After normalization, the log ratio values were transformed back to the absolute abundances for missing value imputation in the next step."
+
+
+Please note: "Membrane proteins were underdetected across the entire RNA expression abundance level; of the 5,500 predicted membrane-bound proteins and 3,000 secreted proteins (Uhlén et al., 2015), we detected 3,143 membrane and 1,848 secreted proteins, respectively"
+
+```{r child = '06-footer.Rmd'}
+```
+
+
+

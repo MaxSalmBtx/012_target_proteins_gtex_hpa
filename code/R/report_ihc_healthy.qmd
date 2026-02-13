@@ -1,0 +1,94 @@
+---
+title: 'Protein expression (healthy tissue): IHC'
+subtitle: 'Portfolio targets'
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+author: "Target Sciences <max.salm@bicycletx.com>"
+format: 
+  html:
+    theme: 
+        light: sandstone
+        dark: darkly
+    toc-title: Contents
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    code-fold: true
+    number-sections: true
+    number-depth: 2
+    highlight-style: pygments
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true    
+    citations-hover: true
+    footnotes-hover: true
+    embed-resources: true    
+bibliography: references.bib
+csl: nature.csl
+citeproc: true
+lightbox: auto
+lang: en-GB
+pagetitle: 'ihc_healthy'
+description-meta: 'Exploratory Data Analysis'
+author-meta: 'm.salm'
+date-meta: '`r format(Sys.time(), "%d %B, %Y")`'
+---
+
+![Department: Therapeutics (Target Sciences)](./IMG/Bicycle_Workmark_RGB_Reg.jpg){width=50% fig-align="left"}
+
+
+
+```{r child = '01b-frontMatter.Rmd'}
+```
+
+# Aim
+
+To identify tissues at risk of on-target off-tumour toxicity.
+
+# Results
+
+To identify tissues at risk of on-target off-tumour toxicity, we retrieved protein expression data from the Human Protein Atlas project (HPA) [PMID: 21139605]. The protein expression data represents 15302 genes in 45 healthy human tissue types and derives from antibody-based protein profiling using immunohistochemistry (IHC) on tissue micro-arrays. 
+
+These were first filtered to the target tissues: Lung, Heart, Kidney and Skin. These were subsequently filtered to the current set of Bicycle targets ("Bicycle_Merged_Target_List_Reserved_targets_06_02_26_FINAL.xlsx").
+
+```{r}
+
+targets::tar_load(hpa_filtered)
+
+hpa_filtered |>
+DT::datatable(
+  class = "cell-border stripe",
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons", 
+  options = 
+    list(
+      dom = "Bfrtip", 
+      buttons = c("copy", "csv", "excel", "pdf", "print")
+    ),
+  caption = "Source: Human Protein Atlas",
+)
+```
+
+# Methods
+
+## Datahub: Human Protein Atlas
+
+The HPA cancer data was retrieved directly from the HPA site, to retrieve the latest data release (Protein Atlas version [24.0](https://www.proteinatlas.org/about/releases)) [@Uhlen2010; @Uhlen2015; @Uhlen2019a; @Uhlen2019; @Uhlen2017; @Karlsson2021; @Sjoestedt2020; @Thul2017; @Yuan2025].
+
+
+The `hpar` package relies on previous data release (Protein Atlas version [21.1](https://www.proteinatlas.org/about/releases#21.1)), and the `HPAanalyze` suffers from broken links to the original data.
+
+Please note, to avoid transcription errors, the method text below is mostly reproduced *verbatim* from the HPA website (and is thus italicised).
+
+*Expression profiles for proteins in 45 human tissues based on immunohistochemisty using tissue micro arrays. The tab-separated file includes Ensembl gene identifier, tissue name, annotated cell type, expression value ("Level"), and the gene reliability of the expression value ("Reliability"). The data is based on The Human Protein Atlas version24.0 and Ensembl version 109.*
+
+N.B. This data corresponds to the `Tissue: Protein Expression Overview` tab on the Human Protein Atlas website.
+
+
+
+
+```{r child = '06-footer.Rmd'}
+```
+
+
+

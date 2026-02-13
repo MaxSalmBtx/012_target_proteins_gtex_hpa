@@ -1,0 +1,18 @@
+```{r}
+knitr::read_chunk("01b-frontMatter.R")
+```
+
+```{r global_knitr_options}
+```
+
+```{r package_management}
+```
+
+```{r colorscheme}
+```
+
+```{r logo}
+```
+
+```{r fonts}
+```

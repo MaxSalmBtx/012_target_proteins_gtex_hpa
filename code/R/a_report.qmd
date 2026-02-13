@@ -1,0 +1,52 @@
+---
+title: 'Differential Expression'
+subtitle: 'Amplicon targets (v.0.1)'
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+author: "Target Sciences <max.salm@bicycletx.com>"
+format: 
+  html:
+    theme: 
+        light: sandstone
+        dark: darkly
+    toc-title: Contents
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    code-fold: true
+    number-sections: true
+    number-depth: 2
+    highlight-style: pygments
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true    
+    citations-hover: true
+    footnotes-hover: true
+    embed-resources: true    
+bibliography: references.bib
+csl: nature.csl
+citeproc: true
+lightbox: auto
+lang: en-GB
+pagetitle: 'DEG'
+description-meta: 'Exploratory Data Analysis'
+author-meta: 'm.salm'
+date-meta: '`r format(Sys.time(), "%d %B, %Y")`'
+---
+
+![Department: Therapeutics (Target Sciences)](./IMG/Bicycle_Workmark_RGB_Reg.jpg){width=50% fig-align="left"}
+
+
+
+```{r child = '01b-frontMatter.Rmd'}
+```
+
+```{r child = '02d-tumour.qmd', eval = TRUE}
+```
+
+```{r child = '03-methods.qmd'}
+```
+
+```{r child = '06-footer.Rmd'}
+```
+
+

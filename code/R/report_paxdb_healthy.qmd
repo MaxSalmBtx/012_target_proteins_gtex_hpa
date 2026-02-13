@@ -1,0 +1,98 @@
+---
+title: 'Protein expression (healthy tissue): PaxDb protein abundance'
+subtitle: 'Portfolio targets'
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+author: "Target Sciences <max.salm@bicycletx.com>"
+format: 
+  html:
+    theme: 
+        light: sandstone
+        dark: darkly
+    toc-title: Contents
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    code-fold: true
+    number-sections: true
+    number-depth: 2
+    highlight-style: pygments
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true    
+    citations-hover: true
+    footnotes-hover: true
+    embed-resources: true    
+bibliography: references.bib
+csl: nature.csl
+citeproc: true
+lightbox: auto
+lang: en-GB
+pagetitle: 'paxdb'
+description-meta: 'Exploratory Data Analysis'
+author-meta: 'm.salm'
+date-meta: '`r format(Sys.time(), "%d %B, %Y")`'
+---
+
+![Department: Therapeutics (Target Sciences)](./IMG/Bicycle_Workmark_RGB_Reg.jpg){width=50% fig-align="left"}
+
+
+
+```{r child = '01b-frontMatter.Rmd'}
+```
+
+# Aim
+
+To identify tissues at risk of on-target off-tumour toxicity.
+
+# Results
+
+To identify tissues at risk of on-target off-tumour toxicity, we retrieved quantitative protein expression data from the PaxDb database. 
+
+These were first filtered to the target tissues: Lung, Heart, Kidney and Skin. These were subsequently filtered to the current set of Bicycle targets ("Bicycle_Merged_Target_List_Reserved_targets_06_02_26_FINAL.xlsx").
+
+```{r}
+
+targets::tar_load(paxdb_tb)
+
+paxdb_tb |>
+DT::datatable(
+  class = "cell-border stripe",
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons", 
+  options = 
+    list(
+      dom = "Bfrtip", 
+      buttons = c("copy", "csv", "excel", "pdf", "print")
+    ),
+  caption = "Source: PaxDb database. abundance values in parts per million (ppm) in relation to all other protein molecules in the sample",
+)
+```
+
+
+
+
+
+# Methods
+
+## Datahub: PaxDb
+
+Human protein abundance data was manually retrieved from: [PaxDb](https://pax-db.org/download)
+
+* https://pax-db.org/downloads/6.0/datasets/9606.zip
+
+All text is reproduced from the reference articles [@Huang2023][@Huang2026]:
+
+The PaxDb database (Protein Abundances Across Organisms) is an integrative metaresource dedicated to absolute protein abundance levels in whole organism or tissue-specific proteomes (8, 9). PaxDb focuses on creating a consensus view on normal/healthy proteomes and expresses abundance values in "parts per million" (ppm) in relation to all other protein molecules in the sample. Since the last PaxDb update, the proteomics community has grown continuously: roughly 1000 projects per month are submitted to ProteomeXchange, the largest centralized platform for MS-derived primary data submission (10), involving PeptideAtlas (11), PRIDE (12), iProX (13), and jPOST (14) among others. For the latest version 5.0 of PaxDb, we have further improved data integration by extending the types of raw data imported from the various repositories and by expanding the number of organisms and tissue groups as well as the proteome depth of previously covered organisms.
+
+Protein abundance datasets in PaxDb are re-scaled to a common abundance metric ('parts per million'), and also ranked via a universally applicable, albeit somewhat indirect quality score. For the re-scaling, the datasets are first parsed or processed such that the data reflect proportional abundances of whole protein molecules (i.e. proportionality to counts of complete, individual protein molecules, not to molecular weights, protein volumes, or digested peptides). In the case of spectral counting data, this is done via an in-house pipeline that takes into account protein sizes and estimated relative detectabilities of peptides. For other datasets, the procedures depend on the type of data and the type of quantitative information that is provided (datasets which cannot be converted to proportional abundances of entire protein molecules are discarded). Then, the proportional abundances are re-scaled linearly to add up to one million; this means the abundance of each protein of interest is finally expressed in 'parts per million', relative to all other proteins in a sample. While this metric cannot be directly converted to 'molecules per cell', it has the advantage of being comparable/meaningful across cells of different volumes, or across tissues of different cellular and extracellular compositions.
+
+
+
+
+
+```{r child = '06-footer.Rmd'}
+```
+
+
+
