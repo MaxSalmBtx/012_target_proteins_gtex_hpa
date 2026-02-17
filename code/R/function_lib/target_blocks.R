@@ -20,7 +20,7 @@ hpa_healthy_ihc_ls <-
 			path = "report_ihc_healthy.qmd",
 			quiet = TRUE,
 			execute_params = list(dummy_param = report_ihc_healthy_t)
-		)		
+		)
 	)
 
 protein_healthy_abundance_ls <-

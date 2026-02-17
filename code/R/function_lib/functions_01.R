@@ -51,7 +51,7 @@ get_hpa_filter <- function(x, y, p) {
 	# tar_load(normal_ihc_data); x = normal_ihc_data; tar_load(param_ls); p = param_ls; tar_load(current_targets); y = current_targets
 	out <- 
 		x |>
-		dplyr::filter(Tissue %in% p$core_tissue) |>
+		dplyr::filter(grepl(paste0(p$core_tissue, collapse = "|"), Tissue)) |>
 		dplyr::filter(Gene %in% y$ENSGID)
 	return(out)
 }
